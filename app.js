@@ -706,27 +706,26 @@ function playerDetailModal(id) {
             .map((f) => (f === 'W' ? 'Win' : 'Loss'))
             .join(' · ')
         : 'No results yet'
-    }</p></div><h3>Still to play</h3><p>${opponents.length ? opponents.map((p) => escape(p.name)).join(' · ') : 'Every opponent played.'}</p><button class="button button-dark button-sm pin-reset-btn" id="reset-pin-btn">${icon('lock')} Get / Reset My Private PIN</button>` : `<p class="fine-print">${icon('lock')} This player's PIN is bound to their personal device.</p>`}</div>`,
+    }</p></div><h3>Still to play</h3><p>${opponents.length ? opponents.map((p) => escape(p.name)).join(' · ') : 'Every opponent played.'}</p><button class="button button-dark" data-action="reminder" data-player="${escape(id)}">Copy a match reminder ${icon('copy')}</button>${rawPlayer?.pinOwned ? `<div class="player-pin-actions"><button class="button button-dark button-sm pin-reset-btn" id="get-pin-btn">${icon('lock')} View My Active PIN</button><button class="text-link" id="reset-pin-btn" style="font-size: 11px; margin-top: 6px;">Generate New PIN</button></div>` : `<p class="fine-print">${icon('lock')} This player's PIN is bound to their personal device.</p>`}</div>`,
     'PLAYER RECORD',
   );
+  const getBtn = document.getElementById('get-pin-btn');
   const resetBtn = document.getElementById('reset-pin-btn');
-  if (resetBtn) {
-    resetBtn.addEventListener('click', async () => {
-      if (saving) return;
-      resetBtn.disabled = true;
-      resetBtn.textContent = 'Generating PIN…';
-      try {
-        const response = await api('reveal-pin', { playerId: id });
-        if (response.pin) {
-          pinRevealModal(names(id), response.pin);
-        }
-      } catch (err) {
-        resetBtn.disabled = false;
-        resetBtn.innerHTML = `${icon('lock')} Get / Reset My Private PIN`;
-        toast(err.message, true);
+  const fetchPin = async (forceReset = false, btn = getBtn) => {
+    if (saving) return;
+    if (btn) btn.disabled = true;
+    try {
+      const response = await api('reveal-pin', { playerId: id, forceReset });
+      if (response.pin) {
+        pinRevealModal(names(id), response.pin);
       }
-    });
-  }
+    } catch (err) {
+      if (btn) btn.disabled = false;
+      toast(err.message, true);
+    }
+  };
+  getBtn?.addEventListener('click', () => fetchPin(false, getBtn));
+  resetBtn?.addEventListener('click', () => fetchPin(true, resetBtn));
 }
 
 function filtersModal() {
@@ -1142,6 +1141,35 @@ modal.addEventListener('click', (e) => {
   }
 });
 $('#refresh').addEventListener('click', () => void refresh(true));
+$('#btn-reset-all-pins')?.addEventListener('click', async () => {
+  if (saving) return;
+  const btn = $('#btn-reset-all-pins');
+  btn.disabled = true;
+  btn.textContent = 'Clearing PINs…';
+  try {
+    const res = await api('reset-all-pins', {});
+    // Clear all player-pin-* and device preferences in localStorage
+    try {
+      const keysToRemove = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && (k.startsWith('player-pin-') || k === 'my-player-id')) {
+          keysToRemove.push(k);
+        }
+      }
+      keysToRemove.forEach((k) => localStorage.removeItem(k));
+    } catch {}
+    await refresh(false, true);
+    btn.textContent = 'Reset All PINs & Clear Local Cache';
+    btn.disabled = false;
+    void hideSheet($('#settings-sheet'));
+    toast(res.message || 'All PINs and device locks have been cleared.');
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Reset All PINs & Clear Local Cache';
+    toast(err.message, true);
+  }
+});
 document.querySelectorAll('[data-filter]').forEach((button) =>
   button.addEventListener('click', () => {
     filter = button.dataset.filter;

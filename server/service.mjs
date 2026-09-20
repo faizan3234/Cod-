@@ -659,6 +659,10 @@ export function createService({
         'This player has been claimed by another device. Only their device can view or reset their PIN.',
         403,
       );
+      // If player already has an active generated PIN and owner just wants to see it again (not force-reset)
+      if (player.lastGeneratedPin && !input.forceReset) {
+        return json({ message: 'Here is your active private PIN.', pin: player.lastGeneratedPin });
+      }
       const newPin = String(Math.floor(100000 + Math.random() * 900000));
       const newHash = digest(playerId + ':' + newPin);
       await mutate((s) => {
@@ -671,8 +675,19 @@ export function createService({
         );
         p.pinHash = newHash;
         p.pinOwner = owner;
+        p.lastGeneratedPin = newPin;
       });
       return json({ message: 'Unique PIN generated for this player.', pin: newPin });
+    }
+    if (action === 'reset-all-pins') {
+      await mutate((s) => {
+        for (const p of s.players) {
+          delete p.pinHash;
+          delete p.pinOwner;
+          delete p.lastGeneratedPin;
+        }
+      });
+      return json({ message: 'All player PINs and device claims have been cleared.' });
     }
     if (action === 'video-start') {
       await rate('video:' + (ip || owner), 5);
