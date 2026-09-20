@@ -1874,6 +1874,273 @@
   max-width: 450px;
   margin: 17px auto 0;
 }
+.charter-pin-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #a89a6e;
+  margin: 12px auto 0;
+  max-width: 460px;
+  text-align: left;
+}
+.charter-pin-info svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #d7c895;
+}
+
+/* PIN Reveal Modal */
+.pin-reveal {
+  text-align: center;
+  padding: 10px 0;
+}
+.pin-reveal-icon {
+  display: grid;
+  place-items: center;
+  margin: 0 auto 18px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, rgba(243, 178, 24, 0.18), rgba(243, 178, 24, 0.06));
+  border: 1px solid rgba(243, 178, 24, 0.35);
+  color: #f3b218;
+}
+.pin-reveal-icon svg {
+  width: 28px;
+  height: 28px;
+}
+.pin-reveal h3 {
+  font: 600 22px/1.3 var(--heading-font, 'Inter', sans-serif);
+  color: #fff;
+  margin: 0 0 10px;
+}
+.pin-reveal > p {
+  font-size: 13px;
+  line-height: 1.75;
+  color: #999;
+  max-width: 380px;
+  margin: 0 auto 24px;
+}
+.pin-code {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto 20px;
+}
+.pin-code span {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 56px;
+  font: 700 26px/1 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+  color: #f3b218;
+  background: rgba(243, 178, 24, 0.08);
+  border: 1.5px solid rgba(243, 178, 24, 0.4);
+  border-radius: 10px;
+  text-shadow: 0 0 16px rgba(243, 178, 24, 0.5);
+  letter-spacing: 0;
+}
+.pin-warning {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #f3b218;
+  margin-bottom: 24px;
+  opacity: 0.85;
+}
+.pin-warning svg {
+  width: 14px;
+  height: 14px;
+}
+.pin-reveal .button {
+  min-width: 200px;
+}
+
+/* Charter Acceptance Section in Match Detail Modal */
+.charter-accept-section {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.charter-accept-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.charter-accept-icon {
+  display: grid;
+  place-items: center;
+  margin: 0 auto 12px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(243, 178, 24, 0.1);
+  border: 1px solid rgba(243, 178, 24, 0.25);
+  color: #f3b218;
+}
+.charter-accept-icon svg {
+  width: 22px;
+  height: 22px;
+}
+.charter-accept-header h3 {
+  font: 700 11px/1 var(--heading-font, 'Inter', sans-serif);
+  letter-spacing: 2px;
+  color: #f3b218;
+  margin: 0 0 8px;
+}
+.charter-accept-header p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #888;
+  margin: 0;
+  max-width: 340px;
+  margin-inline: auto;
+}
+
+/* Charter Slots in Modal */
+.charter-slots-accept {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.charter-slot {
+  padding: 16px 12px;
+  border-radius: 14px;
+  text-align: center;
+}
+.charter-slot strong {
+  display: block;
+  font-size: 13px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.charter-slot small {
+  display: block;
+  font-size: 11px;
+  margin-bottom: 10px;
+}
+.charter-pending {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.charter-pending small {
+  color: #888;
+}
+.charter-accepted {
+  background: rgba(76, 175, 80, 0.08);
+  border: 1px solid rgba(76, 175, 80, 0.25);
+}
+.charter-accepted small {
+  color: rgba(76, 175, 80, 0.8);
+}
+.charter-slot-check {
+  display: grid;
+  place-items: center;
+  margin: 0 auto 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(76, 175, 80, 0.15);
+  color: #4caf50;
+}
+.charter-slot-check svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* PIN Input Form in Charter Slot */
+.charter-pin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+.pin-input {
+  width: 100%;
+  max-width: 140px;
+  padding: 8px 12px;
+  font: 600 16px/1.2 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+  text-align: center;
+  letter-spacing: 4px;
+  color: #f3b218;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1.5px solid rgba(243, 178, 24, 0.3);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.pin-input:focus {
+  border-color: rgba(243, 178, 24, 0.7);
+  box-shadow: 0 0 12px rgba(243, 178, 24, 0.15);
+}
+.pin-input::placeholder {
+  color: rgba(243, 178, 24, 0.25);
+  letter-spacing: 1px;
+  font-size: 11px;
+}
+.button-sm {
+  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: 8px;
+}
+.charter-pin-form .form-error {
+  font-size: 11px;
+  text-align: center;
+  max-width: 160px;
+}
+
+/* Both Agreed Badge */
+.charter-both-agreed {
+  text-align: center;
+  padding: 20px 16px;
+  border-radius: 14px;
+  background: rgba(76, 175, 80, 0.06);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+}
+.charter-agreed-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 700 13px/1 var(--heading-font, 'Inter', sans-serif);
+  letter-spacing: 1.5px;
+  color: #4caf50;
+  margin-bottom: 8px;
+}
+.charter-agreed-badge svg {
+  width: 18px;
+  height: 18px;
+}
+.charter-both-agreed small {
+  display: block;
+  font-size: 11px;
+  color: #777;
+  margin-top: 6px;
+}
+
+/* PIN Reset Link in Player Detail */
+.pin-reset-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  font-size: 12px;
+  color: #f3b218;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.pin-reset-link:hover {
+  opacity: 1;
+}
+.pin-reset-link svg {
+  width: 14px;
+  height: 14px;
+}
 .cinema-exit {
   display: none;
 }

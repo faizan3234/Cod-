@@ -136,8 +136,14 @@ export function createService({
     return {
       ...s,
       mode,
+      players: s.players.map(({ pinHash, pinOwner, ...p }) => ({
+        ...p,
+        pinOwned: !pinOwner || pinOwner === owner || mode === 'local',
+      })),
       matches: s.matches.map(({ submissionKey, submissionDigest, ...m }) => ({
         ...m,
+        acceptedA: m.acceptedA || null,
+        acceptedB: m.acceptedB || null,
         reports: (m.reports || []).map(({ owner: o, ...r }) => ({
           ...r,
           mine: o === owner,
@@ -371,6 +377,8 @@ export function createService({
     if (action === 'player') {
       const name = domain(() => cleanName(input.name)),
         id = normalizeName(name);
+      const pin = String(Math.floor(100000 + Math.random() * 900000));
+      const pinHash = digest(id + ':' + pin);
       await mutate((s) => {
         assert(
           !leagueSummary(s).rosterLocked,
@@ -383,9 +391,9 @@ export function createService({
           'That player is already on the roster.',
           409,
         );
-        s.players.push({ id, name });
+        s.players.push({ id, name, pinHash, pinOwner: owner });
       });
-      return json({ message: 'Player added.' }, 201);
+      return json({ message: 'Player added.', pin }, 201);
     }
     if (action === 'schedule') {
       await mutate((s) => {
@@ -569,6 +577,66 @@ export function createService({
         m.reports = m.reports.filter((r) => r.id !== input.reportId);
       });
       return json({ message: 'Report withdrawn.' });
+    }
+    if (action === 'accept-charter') {
+      const playerId = text(input.playerId, 40);
+      const pin = text(input.pin, 10);
+      assert(playerId && pin.length === 6, 'Enter your 6-digit player PIN.');
+      await mutate((s) => {
+        const player = s.players.find((p) => p.id === playerId);
+        assert(player, 'Player not found on the roster.', 404);
+        if (!player.pinHash) {
+          player.pinHash = digest(playerId + ':123456');
+        }
+        const expectedHash = digest(playerId + ':' + pin);
+        assert(
+          expectedHash === player.pinHash,
+          'Incorrect PIN. For initial roster players, default PIN is 123456 (or reset it via player profile in Standings).',
+          403,
+        );
+        const matchId = text(input.matchId, 80);
+        const m = s.matches.find((mm) => mm.id === matchId);
+        assert(m, 'Match not found.', 404);
+        assert(
+          m.playerA === playerId || m.playerB === playerId,
+          'This player is not part of this match.',
+          403,
+        );
+        if (m.playerA === playerId) {
+          assert(!m.acceptedA, 'Player A has already accepted this charter.', 409);
+          m.acceptedA = now().toISOString();
+        } else {
+          assert(!m.acceptedB, 'Player B has already accepted this charter.', 409);
+          m.acceptedB = now().toISOString();
+        }
+      });
+      return json({ message: 'Charter accepted. Your word is locked in.' });
+    }
+    if (action === 'reveal-pin') {
+      const playerId = text(input.playerId, 40);
+      assert(playerId, 'Select a player.');
+      const { data } = await current();
+      const player = data.players.find((p) => p.id === playerId);
+      assert(player, 'Player not found.', 404);
+      assert(
+        !player.pinOwner || player.pinOwner === owner || mode === 'local',
+        'Only the browser that added this player can reveal their PIN. Use the same device and browser.',
+        403,
+      );
+      const newPin = String(Math.floor(100000 + Math.random() * 900000));
+      const newHash = digest(playerId + ':' + newPin);
+      await mutate((s) => {
+        const p = s.players.find((pp) => pp.id === playerId);
+        assert(p, 'Player not found.', 404);
+        assert(
+          !p.pinOwner || p.pinOwner === owner || mode === 'local',
+          'Only the original browser can reset this PIN.',
+          403,
+        );
+        p.pinHash = newHash;
+        p.pinOwner = owner;
+      });
+      return json({ message: 'PIN has been reset.', pin: newPin });
     }
     if (action === 'video-start') {
       await rate('video:' + (ip || owner), 5);
