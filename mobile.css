@@ -17,8 +17,9 @@
   height: 76px;
   display: grid;
   place-items: center;
-  background: #eaf1df;
-  color: #577240;
+  background: rgba(243, 178, 24, 0.15);
+  color: #f3b218;
+  border: 1px solid rgba(243, 178, 24, 0.4);
   border-radius: 50%;
   margin: 0 auto 24px;
 }
@@ -29,26 +30,29 @@
 .save-receipt h3 {
   font-size: 34px;
   margin-bottom: 14px;
+  color: #ffffff;
 }
 .save-receipt p {
-  color: #66715c;
+  color: #aaa9a3;
   font-size: 14px;
 }
 .receipt-score {
-  font-family: 'Barlow Condensed';
+  font-family: 'Barlow Condensed', sans-serif;
   font-size: 52px;
   line-height: 1;
+  color: #f3b218;
   margin: 24px 0 10px;
 }
 .receipt-players {
   font-weight: 700;
   font-size: 14px;
   line-height: 1.7;
+  color: #ffffff;
   overflow-wrap: anywhere;
 }
 .receipt-id {
   font-size: 11px;
-  color: #79826f;
+  color: #888884;
   margin-block: 18px 24px;
 }
 .save-receipt .button {
@@ -60,19 +64,19 @@
 .upload-submit-status {
   font-size: 12px;
   line-height: 1.6;
-  color: #6b785d;
+  color: #aaa9a3;
   margin-top: 12px;
 }
 .phone-tabs a[aria-current='page'] {
-  color: #496537;
+  color: #f3b218;
 }
 
 @media (max-width: 900px), (max-height: 520px) and (max-width: 1100px) {
   :root {
     --header: 68px;
-    --paper: #f6f7f2;
-    --muted: #606b59;
-    --line: #e0e5d9;
+    --paper: #060606;
+    --muted: #aaa9a3;
+    --line: rgba(243, 178, 24, 0.22);
     --phone-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
     scroll-padding-top: calc(
       var(--header) + env(safe-area-inset-top, 0px) + 18px
@@ -94,10 +98,10 @@
       max(20px, env(safe-area-inset-left, 0px));
     height: calc(var(--header) + env(safe-area-inset-top, 0px));
     gap: 12px;
-    background: #f6f7f2eb;
+    background: rgba(8, 8, 8, 0.94);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    border-bottom-color: #e4e8de;
+    border-bottom: 1px solid rgba(243, 178, 24, 0.25);
   }
   .brand {
     gap: 10px;
@@ -126,8 +130,9 @@
     display: grid;
     width: 44px;
     height: 44px;
-    background: #fff;
-    border-color: #dfe5d6;
+    background: #141414;
+    border: 1px solid rgba(243, 178, 24, 0.3);
+    color: #f3b218;
   }
   .header-actions .icon-button svg {
     width: 20px;
@@ -135,7 +140,7 @@
   }
   .button {
     min-height: 50px;
-    border-radius: 13px;
+    border-radius: 4px;
     font-size: 14px;
     padding: 13px 18px;
     gap: 11px;
@@ -150,14 +155,19 @@
     transform: scale(0.98);
   }
   .button-dark {
-    background: #293e2f;
+    background: #161616;
+    color: #f3b218;
+    border: 1px solid rgba(243, 178, 24, 0.35);
   }
   .button-lime {
-    background: #dcedb6;
+    background: linear-gradient(135deg, #f3b218, #ff6a00);
+    color: #030303;
+    border: none;
   }
   .button-outline {
-    background: white;
-    border-color: #dce3d3;
+    background: rgba(18, 18, 18, 0.9);
+    color: #ffffff;
+    border: 1px solid rgba(243, 178, 24, 0.25);
   }
   .icon-button {
     width: 44px;
@@ -277,9 +287,10 @@
   }
   .hero-actions .text-link {
     min-height: 50px;
-    border: 1px solid #dce3d3;
-    background: #fff;
-    border-radius: 13px;
+    border: 1px solid rgba(243, 178, 24, 0.3);
+    background: #121212;
+    color: #f3b218;
+    border-radius: 4px;
     font-size: 12px;
   }
   .hero-note {
@@ -289,15 +300,17 @@
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0;
-    background: #fff;
-    border: 1px solid #e0e6d8;
-    border-radius: 19px;
+    background: rgba(14, 14, 14, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(243, 178, 24, 0.3);
+    border-radius: 6px;
     padding: 19px 0 16px;
-    box-shadow: 0 4px 14px #23331d03;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(243, 178, 24, 0.04);
     margin-bottom: 26px;
   }
   .pulse-stat {
-    border-right: 1px solid #e5e9de;
+    border-right: 1px solid rgba(243, 178, 24, 0.18);
     gap: 7px;
     padding: 0 18px;
   }
@@ -305,38 +318,50 @@
     border-right: 0;
   }
   .stat-value {
-    font-family: 'Manrope', sans-serif;
-    font-size: 29px;
-    font-weight: 750;
-    letter-spacing: -1.5px;
-    line-height: 1.2;
+    font-family: 'Barlow Condensed', Impact, sans-serif;
+    font-size: 34px;
+    font-weight: 800;
+    color: #f3b218;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
   }
   .stat-label {
     font-size: 9px;
-    letter-spacing: 0.8px;
-    color: #6a745f;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    color: #aaa9a3;
     max-width: none;
   }
   .pulse-progress {
     grid-column: 1/-1;
     padding: 18px 18px 0;
     margin-top: 17px;
-    border-top: 1px solid #edf0e8;
+    border-top: 1px solid rgba(243, 178, 24, 0.18);
+    color: #ffffff;
   }
   .pulse-progress > div:first-child {
     font-size: 9px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1.5px;
+    color: #aaa9a3;
   }
   .pulse-progress strong {
     font-size: 12px;
+    color: #f3b218;
   }
   .progress-track {
-    height: 5px;
+    height: 6px;
     margin: 10px 0 9px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+  }
+  .progress-track > span {
+    background: linear-gradient(90deg, #f3b218, #ff6a00);
+    border-radius: 3px;
   }
   .pulse-progress small {
     font-size: 11px;
     line-height: 1.6;
+    color: #aaa9a3;
   }
   .roster-ribbon {
     display: none;
@@ -2597,24 +2622,26 @@ dialog[data-step='4'] {
     align-items: center;
     gap: 16px;
     padding: 19px;
-    background: #eaf0e0;
-    border: 1px solid #dfe7d2;
-    border-radius: 18px;
+    background: rgba(18, 18, 18, 0.9);
+    border: 1px solid rgba(243, 178, 24, 0.25);
+    border-radius: 6px;
+    color: #ffffff;
   }
   .standings-empty > svg {
     width: 28px;
     height: 28px;
     flex-shrink: 0;
-    color: #77895d;
+    color: #f3b218;
   }
   .standings-empty strong {
     font-size: 14px;
+    color: #f3b218;
   }
   .standings-empty p {
     font-size: 12px;
     line-height: 1.6;
     margin: 7px 0 0;
-    color: #677659;
+    color: #aaa9a3;
   }
   .phone-filter {
     display: flex;
@@ -2650,7 +2677,7 @@ dialog[data-step='4'] {
     width: 36px;
     height: 4px;
     border-radius: 4px;
-    background: #cad5bd;
+    background: rgba(243, 178, 24, 0.5);
   }
   .modal-header:before {
     display: none;

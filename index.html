@@ -105,79 +105,19 @@
       ><a href="#matches">Matchboard</a><a href="#clips">Highlights</a>
     </nav>
 
-    <main>
-      <section
-        id="home"
-        class="hero lobby-hero"
-        aria-label="Solo League lobby"
-      >
-        <div class="lobby-scene" aria-hidden="true">
-          <div class="lobby-world">
-            <div class="lobby-architecture"></div>
-            <div class="lobby-beam"></div>
-            <div class="lobby-haze"></div>
-          </div>
-          <div class="lobby-platform">
-            <div class="platform-ring"></div>
-            <div class="platform-ring inner"></div>
-          </div>
-          <div class="lobby-insignia">
-            <div class="insignia-orbit"></div>
-            <div class="insignia-core">
-              <span>C<span>·</span>D</span><small>SOLO LEAGUE</small><i></i
-              ><b>1V1</b>
-            </div>
-          </div>
-          <div class="lobby-embers"></div>
-          <div class="lobby-shade"></div>
-        </div>
-        <div class="hero-copy shell">
-          <div class="lobby-eyebrow">
-            <span class="square-dot"></span> CALL OF DUTY
-            <span>/ SOLO LEAGUE</span>
-          </div>
-          <h1>ONE LOBBY.<br /><span>YOUR LEGACY.</span></h1>
-          <div class="lobby-space" aria-hidden="true"></div>
-          <p class="hero-description">
-            The moments are yours.<br />The scoreboard makes them official.
-          </p>
-          <div class="hero-actions">
-            <button class="button button-lime" data-action="upload">
-              Post a scoreboard <span data-icon="arrow-up-right"></span>
-            </button>
-            <a class="text-link" href="#cinematic"
-              >Enter the arena <span data-icon="play"></span
-            ></a>
-          </div>
-          <div class="lobby-footer">
-            <button
-              class="lobby-sound"
-              id="lobby-sound"
-              aria-label="Choose your soundtrack"
-            >
-              <span class="equalizer" aria-hidden="true"
-                ><i></i><i></i><i></i><i></i></span
-              ><span id="lobby-sound-label">Your soundtrack</span></button
-            ><a class="lobby-scroll" href="#league"
-              >SCROLL TO THE LEAGUE <span data-icon="arrow-down"></span
-            ></a>
-          </div>
-        </div>
-        <div class="lobby-side" aria-hidden="true">
-          THE LOBBY IS YOURS. EARN YOUR PLACE.
-        </div>
-      </section>
-
+    <main id="main">
       <!-- 81-Frame WebP Battlefield Canvas Sequence (Omnitrix-style architecture) -->
       <section id="battle-sequence" class="battle-sequence" aria-label="Battlefield Simulation">
+        <div id="home" class="anchor-target" style="position: absolute; top: 0; left: 0; width: 0; height: 0; overflow: hidden;" aria-hidden="true"></div>
         <div class="battle-sticky" id="battle-container">
           <canvas id="battle-canvas"></canvas>
+          <canvas id="particles-canvas"></canvas>
           <div id="battle-flash" class="battle-flash" aria-hidden="true"></div>
           <div class="battle-fire-glow" aria-hidden="true"></div>
           <div class="battle-hud-overlay" aria-hidden="true">
             <div class="hud-top-bar">
               <span class="hud-tag"><span class="square-dot"></span> TACTICAL // COMBAT ZONE</span>
-              <span class="hud-coords">34.0522° N, 118.2437° W</span>
+              <span class="hud-coords">GRID // B7-42 • ZONE // VERDANSK-04 • SIGNAL // 99% MIL-LINK</span>
             </div>
             <div id="battle-scroll-prompt" class="battle-scroll-prompt">
               <span class="scroll-chevron">↓</span>
@@ -188,22 +128,24 @@
           </div>
         </div>
       </section>
+
+      <section class="shell league-pulse" aria-label="League progress">
         <div class="pulse-stat">
-          <span class="stat-value" id="stat-players">—</span
-          ><span class="stat-label">PLAYERS</span>
+          <span class="stat-value" id="stat-players">—</span>
+          <span class="stat-label">PLAYERS</span>
         </div>
         <div class="pulse-stat">
-          <span class="stat-value" id="stat-total">—</span
-          ><span class="stat-label">MATCHUPS</span>
+          <span class="stat-value" id="stat-total">—</span>
+          <span class="stat-label">MATCHUPS</span>
         </div>
         <div class="pulse-stat">
-          <span class="stat-value" id="stat-complete">—</span
-          ><span class="stat-label">PLAYED</span>
+          <span class="stat-value" id="stat-complete">—</span>
+          <span class="stat-label">PLAYED</span>
         </div>
         <div class="pulse-progress">
           <div>
-            <span>THE ROAD TO THE CROWN</span
-            ><strong id="progress-label">—</strong>
+            <span>THE ROAD TO THE CROWN</span>
+            <strong id="progress-label">—</strong>
           </div>
           <div class="progress-track"><span id="league-progress"></span></div>
           <small id="progress-caption">Connecting to the league…</small>
@@ -737,8 +679,8 @@
     </dialog>
     <audio id="lobby-audio" preload="metadata" loop></audio>
     <audio id="battle-music" preload="auto" loop playsinline webkit-playsinline>
-      <source src="/audio/dhurandhar.wav" type="audio/wav" />
       <source src="/audio/dhurandhar.mp3" type="audio/mpeg" />
+      <source src="/audio/dhurandhar.wav" type="audio/wav" />
     </audio>
 
     <div class="battle-quick-controls" aria-label="Audio and haptic controls">
