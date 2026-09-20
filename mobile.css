@@ -2177,6 +2177,27 @@
   height: 16px;
   flex-shrink: 0;
 }
+.charter-locked-dialog {
+  text-align: center;
+  padding: 24px 12px 12px;
+}
+.charter-locked-dialog h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 24px;
+  letter-spacing: 2px;
+  color: #f4f4f1;
+  margin: 12px 0 8px;
+}
+.charter-locked-dialog p {
+  color: #aaa9a3;
+  font-size: 13px;
+  line-height: 1.6;
+  max-width: 380px;
+  margin: 0 auto 20px;
+}
+.charter-locked-dialog .form-actions {
+  justify-content: center;
+}
 
 /* PIN Reset Link in Player Detail */
 .pin-reset-link {

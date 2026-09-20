@@ -471,6 +471,33 @@ function savedResultModal(values, receipt, synced) {
 }
 
 function uploadModal(pair = '') {
+  if (pair) {
+    const match = fixtures(state).find((m) => m.id === pair);
+    if (match && (!match.acceptedA || !match.acceptedB)) {
+      matchDetailModal(pair);
+      toast('Both players must enter their PIN to accept the match charter before posting results.', true);
+      return;
+    }
+  } else {
+    // Check if there are any matches where both players have agreed
+    const agreedMatches = fixtures(state).filter(
+      (m) => m.status !== 'completed' && m.acceptedA && m.acceptedB,
+    );
+    if (agreedMatches.length === 0) {
+      openModal(
+        'PIN AGREEMENT REQUIRED.',
+        `<div class="charter-locked-dialog"><div class="charter-accept-icon">${icon('lock')}</div><h3>NO CONFIRMED MATCHES YET</h3><p>Before posting a final scoreboard, both players must open their matchup on the <strong>Matchboard</strong> and enter their 6-digit PIN to agree to the match charter.</p><div class="form-actions"><button class="button button-dark" id="go-to-matches">Go to Matchboard ${icon('target')}</button></div></div>`,
+        'AGREEMENT REQUIRED',
+      );
+      $('#go-to-matches')?.addEventListener('click', () => {
+        closeModal();
+        const matchesSection = $('#matches');
+        if (matchesSection) matchesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        location.hash = '#matches';
+      });
+      return;
+    }
+  }
   openModal(
     'POST YOUR SCOREBOARD.',
     `<p class="modal-intro">Upload a clear, final 1v1 scoreboard. We'll read the text, then you'll check the players and scores before posting.</p><label class="dropzone" id="score-drop">${icon('scan')}<strong>Drop your scoreboard here</strong><span>or tap to choose a screenshot<br />PNG, JPG or WebP · up to 4 MB</span><input id="score-file" type="file" accept="image/png,image/jpeg,image/webp" aria-label="Choose scoreboard screenshot" /></label><div class="upload-steps"><span class="upload-step"><b>1</b> Upload screenshot</span><span class="upload-step"><b>2</b> Check details</span><span class="upload-step"><b>3</b> Post result</span></div><p class="fine-print">Only upload a real final scoreboard. Images and any corrections are public. One official result per matchup; posted results cannot be overwritten.</p>`,
@@ -574,14 +601,13 @@ function reviewScreenshot(result, pair) {
       if (a === b) {
         check.textContent = 'Choose two different players.';
         check.hidden = false;
-      } else if (
-        state.matches.some(
-          (m) => m.id === pairKey(a, b) && m.status === 'completed',
-        )
-      ) {
-        check.textContent =
-          'This matchup already has a result. Reversing the names does not create a new match.';
-        check.hidden = false;
+      } else {
+        const pk = pairKey(a, b);
+        const m = state.matches.find((mm) => mm.id === pk);
+        if (!m || !m.acceptedA || !m.acceptedB) {
+          check.textContent = 'Both players must enter their PIN to accept the match charter before this result can be posted.';
+          check.hidden = false;
+        }
       }
     }
   }
