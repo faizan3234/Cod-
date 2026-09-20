@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#f6f7f2" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Solo League" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta
+      name="description"
+      content="Your COD 1v1 league. Post the scoreboard, follow the standings, share your gameplay. Every match counts."
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>COD Solo League — Every match counts.</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#league">Skip to standings</a>
+    <header class="site-header">
+      <a href="#home" class="brand" aria-label="COD Solo League home"
+        ><span class="brand-mark">C<span>·</span>D</span
+        ><span class="brand-copy"
+          >SOLO LEAGUE<small>ONE LOBBY. ONE CROWN.</small></span
+        ></a
+      >
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a class="active" href="#home">Overview</a
+        ><a href="#league">Standings</a><a href="#matches">Matchboard</a
+        ><a href="#clips">Highlights</a>
+      </nav>
+      <div class="header-actions">
+        <span
+          class="header-live"
+          id="header-live"
+          role="status"
+          data-state="syncing"
+          >◌ SYNCING</span
+        >
+        <button
+          class="icon-button"
+          id="settings-open"
+          aria-label="Settings"
+          title="Settings"
+        >
+          <span data-icon="settings"></span></button
+        ><button
+          class="button button-dark header-upload"
+          data-action="upload"
+        >
+          <span data-icon="upload"></span><span>Post result</span></button
+        ><button
+          class="icon-button menu-toggle"
+          id="menu-toggle"
+          aria-label="Open navigation"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+        >
+          <span data-icon="menu"></span>
+        </button>
+      </div>
+    </header>
+    <nav
+      id="mobile-nav"
+      class="mobile-nav"
+      aria-label="Mobile navigation"
+      hidden
+    >
+      <a href="#home">Overview</a><a href="#league">Standings</a
+      ><a href="#matches">Matchboard</a><a href="#clips">Highlights</a>
+    </nav>
+
+    <main>
+      <section
+        id="home"
+        class="hero lobby-hero"
+        aria-label="Solo League lobby"
+      >
+        <div class="lobby-scene" aria-hidden="true">
+          <div class="lobby-world">
+            <div class="lobby-architecture"></div>
+            <div class="lobby-beam"></div>
+            <div class="lobby-haze"></div>
+          </div>
+          <div class="lobby-platform">
+            <div class="platform-ring"></div>
+            <div class="platform-ring inner"></div>
+          </div>
+          <div class="lobby-insignia">
+            <div class="insignia-orbit"></div>
+            <div class="insignia-core">
+              <span>C<span>·</span>D</span><small>SOLO LEAGUE</small><i></i
+              ><b>1V1</b>
+            </div>
+          </div>
+          <div class="lobby-embers"></div>
+          <div class="lobby-shade"></div>
+        </div>
+        <div class="hero-copy shell">
+          <div class="lobby-eyebrow">
+            <span class="square-dot"></span> CALL OF DUTY
+            <span>/ SOLO LEAGUE</span>
+          </div>
+          <h1>ONE LOBBY.<br /><span>YOUR LEGACY.</span></h1>
+          <div class="lobby-space" aria-hidden="true"></div>
+          <p class="hero-description">
+            The moments are yours.<br />The scoreboard makes them official.
+          </p>
+          <div class="hero-actions">
+            <button class="button button-lime" data-action="upload">
+              Post a scoreboard <span data-icon="arrow-up-right"></span>
+            </button>
+            <a class="text-link" href="#cinematic"
+              >Enter the arena <span data-icon="play"></span
+            ></a>
+          </div>
+          <div class="lobby-footer">
+            <button
+              class="lobby-sound"
+              id="lobby-sound"
+              aria-label="Choose your soundtrack"
+            >
+              <span class="equalizer" aria-hidden="true"
+                ><i></i><i></i><i></i><i></i></span
+              ><span id="lobby-sound-label">Your soundtrack</span></button
+            ><a class="lobby-scroll" href="#league"
+              >SCROLL TO THE LEAGUE <span data-icon="arrow-down"></span
+            ></a>
+          </div>
+        </div>
+        <div class="lobby-side" aria-hidden="true">
+          THE LOBBY IS YOURS. EARN YOUR PLACE.
+        </div>
+      </section>
+
+      <section class="shell league-pulse" aria-label="League progress">
+        <div class="pulse-stat">
+          <span class="stat-value" id="stat-players">—</span
+          ><span class="stat-label">PLAYERS</span>
+        </div>
+        <div class="pulse-stat">
+          <span class="stat-value" id="stat-total">—</span
+          ><span class="stat-label">MATCHUPS</span>
+        </div>
+        <div class="pulse-stat">
+          <span class="stat-value" id="stat-complete">—</span
+          ><span class="stat-label">PLAYED</span>
+        </div>
+        <div class="pulse-progress">
+          <div>
+            <span>THE ROAD TO THE CROWN</span
+            ><strong id="progress-label">—</strong>
+          </div>
+          <div class="progress-track"><span id="league-progress"></span></div>
+          <small id="progress-caption">Connecting to the league…</small>
+        </div>
+      </section>
+      <section
+        id="mobile-hub"
+        class="shell mobile-hub"
+        aria-label="Your league"
+      >
+        <div class="hub-placeholder">Loading the league…</div>
+      </section>
+      <div class="shell draft-banner" id="draft-banner" hidden>
+        <div>
+          <strong>Your scoreboard draft is here.</strong
+          ><span>Finish when you're ready.</span>
+        </div>
+        <button class="text-link" data-action="resume">
+          Resume <span data-icon="arrow-up-right"></span>
+        </button>
+      </div>
+      <section
+        class="shell home-leaders"
+        id="home-leaders"
+        aria-label="Season leaders"
+      ></section>
+      <div class="roster-ribbon">
+        <div class="shell">
+          <span class="ribbon-label">THE ROSTER</span>
+          <div id="roster-ribbon">Loading players…</div>
+        </div>
+      </div>
+
+      <div class="shell connection-bar">
+        <span id="connection-status" role="status"
+          ><span class="status-dot"></span> Connecting…</span
+        ><button id="refresh" class="text-link">
+          <span data-icon="refresh"></span> Refresh
+        </button>
+      </div>
+      <div class="shell">
+        <div
+          id="connection-error"
+          class="notice notice-error"
+          role="alert"
+          hidden
+        ></div>
+      </div>
+
+      <section id="league" class="shell section-block">
+        <div class="section-heading reveal">
+          <div>
+            <div class="eyebrow">01 / THE LEAGUE</div>
+            <h2>THE STANDINGS<span class="heading-dot">.</span></h2>
+            <p>Earned on the scoreboard. Updated with every posted result.</p>
+          </div>
+          <span class="pill" id="standings-sync"
+            ><span class="status-dot"></span> CONNECTING</span
+          >
+        </div>
+        <div class="standings-layout reveal">
+          <div class="table-card">
+            <div class="table-caption">
+              <span>SOLO LEAGUE · ROUND ROBIN</span
+              ><span>WIN = 3 POINTS</span>
+            </div>
+            <div
+              id="phone-standings"
+              class="phone-standings"
+              aria-label="League standings"
+            ></div>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">PLAYER</th>
+                    <th scope="col">P</th>
+                    <th scope="col">W</th>
+                    <th scope="col">L</th>
+                    <th scope="col">+/−</th>
+                    <th scope="col" class="form-column">FORM</th>
+                    <th scope="col">PTS</th>
+                  </tr>
+                </thead>
+                <tbody id="standings-body">
+                  <tr>
+                    <td colspan="8" class="loading-cell">
+                      Connecting to the league…
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-foot" id="standings-note">
+              A position is earned after the first completed match.
+            </div>
+          </div>
+          <aside id="next-match" class="next-card">
+            <span class="eyebrow">UP NEXT</span>
+            <h3>THE NEXT MOVE<br />IS YOURS.</h3>
+            <p>Loading remaining matchups…</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="shell">
+        <div class="upload-banner reveal">
+          <span class="banner-icon" data-icon="scan"></span>
+          <div>
+            <span class="eyebrow">PLAY IT. POST IT. PROVE IT.</span>
+            <h3>A SCREENSHOT IS ALL IT TAKES.</h3>
+            <p>
+              Upload the final scoreboard. Check the extracted details. Watch
+              the table move.
+            </p>
+          </div>
+          <button class="button button-dark" data-action="upload">
+            Upload scoreboard <span data-icon="arrow-up-right"></span>
+          </button>
+        </div>
+      </section>
+
+      <section id="matches" class="shell section-block">
+        <div class="section-heading reveal">
+          <div>
+            <div class="eyebrow">02 / EVERY MATCH COUNTS</div>
+            <h2>THE MATCHBOARD<span class="heading-dot">.</span></h2>
+            <p>Everyone plays everyone. Once. Find your next opponent.</p>
+          </div>
+          <button class="button button-outline" data-action="schedule">
+            <span data-icon="plus"></span> Queue a match
+          </button>
+        </div>
+        <div class="match-toolbar">
+          <button
+            class="button button-outline phone-filter"
+            data-action="filters"
+          >
+            <span data-icon="settings"></span
+            ><span id="filter-summary">Filter matches</span>
+          </button>
+          <div class="segmented" aria-label="Filter matches">
+            <button class="active" data-filter="all" aria-pressed="true">
+              All <span id="count-all">—</span></button
+            ><button data-filter="pending" aria-pressed="false">
+              To play <span id="count-pending">—</span></button
+            ><button data-filter="completed" aria-pressed="false">
+              Completed <span id="count-done">—</span>
+            </button>
+          </div>
+          <label class="select-label"
+            ><span class="sr-only">Filter by player</span
+            ><select id="player-filter">
+              <option value="">All players</option>
+            </select></label
+          >
+        </div>
+        <div id="match-grid" class="match-grid">
+          <div class="empty-card">Loading matchups…</div>
+        </div>
+        <div class="show-more-wrap">
+          <button class="button button-outline" id="show-more" hidden>
+            Show all matchups <span data-icon="arrow-down"></span>
+          </button>
+        </div>
+      </section>
+
+      <section class="shell charter-card" aria-labelledby="charter-title">
+        <span class="charter-seal" data-icon="crown"></span
+        ><span class="eyebrow">THE MATCH CHARTER · PREVIEW</span>
+        <h2 id="charter-title">One match. Our word.</h2>
+        <p>
+          No rematch. Check your connection before play. Once play begins,
+          connection issues do not grant a replay. The completed final
+          scoreboard is the record.
+        </p>
+        <div class="charter-slots">
+          <span>PLAYER ONE <small>Not signed</small></span
+          ><span>PLAYER TWO <small>Not signed</small></span>
+        </div>
+        <button
+          class="button button-outline"
+          disabled
+          aria-describedby="charter-disabled"
+        >
+          <span data-icon="lock"></span>Acceptance unavailable
+        </button>
+        <small id="charter-disabled"
+          >Preview only. Verified player accounts must be connected before
+          either player can accept. No signatures have been recorded.</small
+        >
+      </section>
+      <section id="players" class="shell section-block">
+        <div class="section-heading reveal">
+          <div>
+            <div class="eyebrow">03 / KNOW YOUR NEXT MOVE</div>
+            <h2>THE LOBBY<span class="heading-dot">.</span></h2>
+            <p>Who you still need to play. Who still needs to post.</p>
+          </div>
+          <div class="heading-actions">
+            <button class="text-link" data-action="player">
+              <span data-icon="plus"></span> Add player</button
+            ><button class="button button-outline" data-action="reminder">
+              <span data-icon="copy"></span> Match reminder
+            </button>
+          </div>
+        </div>
+        <div id="player-grid" class="player-grid">
+          <div class="empty-card">Loading players…</div>
+        </div>
+      </section>
+
+      <section
+        id="cinematic"
+        class="cinematic-section"
+        aria-label="Scroll through the arena video"
+      >
+        <div class="cinematic-sticky">
+          <button
+            class="cinema-exit icon-button"
+            id="cinema-exit"
+            aria-label="Exit cinematic"
+          >
+            <span data-icon="close"></span>
+          </button>
+          <a class="cinema-skip" href="#league"
+            >SKIP <span data-icon="arrow-up-right"></span
+          ></a>
+          <div class="cinema-top">
+            <span class="eyebrow"
+              ><span class="square-dot"></span> INSIDE THE ARENA</span
+            ><a class="text-link" href="#league"
+              >Skip to results <span data-icon="arrow-down"></span
+            ></a>
+          </div>
+          <div class="cinema-stage">
+            <video
+              id="arena-video"
+              poster="/arena-poster.jpg"
+              muted
+              playsinline
+              preload="none"
+              aria-label="Community arena intro video"
+            ></video>
+            <div class="cinema-vignette"></div>
+            <div class="cinema-caption">
+              <span>YOUR MOMENT STARTS HERE</span
+              ><strong>SCROLL INTO<br />THE LEAGUE.</strong>
+            </div>
+            <div class="cinema-finish" id="cinema-finish" inert>
+              <span class="eyebrow">THE GAME IS ONLY THE BEGINNING</span>
+              <h2>LET THE<br /><span>RESULTS TALK.</span></h2>
+              <a class="button button-dark" href="#league"
+                >View the standings <span data-icon="arrow-down"></span
+              ></a>
+            </div>
+          </div>
+          <div class="cinema-controls">
+            <button id="cinema-play" class="button button-dark">
+              <span data-icon="play"></span> Play with sound</button
+            ><button
+              id="cinema-mute"
+              class="icon-button"
+              aria-label="Turn sound on"
+              title="Turn sound on"
+            >
+              <span data-icon="volume-off"></span></button
+            ><button id="cinema-mode" class="text-link">
+              Scroll mode <span data-icon="scroll"></span></button
+            ><span id="cinema-hint"
+              >Scroll to move through the video. Tap play for original
+              sound.</span
+            >
+          </div>
+          <div class="cinema-progress">
+            <span id="cinema-progress"></span>
+          </div>
+        </div>
+      </section>
+
+      <section id="clips" class="highlights-section">
+        <div class="shell section-block">
+          <div class="section-heading reveal">
+            <div>
+              <div class="eyebrow">04 / MORE THAN THE SCORE</div>
+              <h2>ROLL THE HIGHLIGHTS<span class="heading-dot">.</span></h2>
+              <p>
+                The clutch moments. The close calls. Straight from your lobby.
+              </p>
+            </div>
+            <button class="button button-lime" data-action="video">
+              <span data-icon="upload"></span> Post gameplay
+            </button>
+          </div>
+          <div id="clip-grid" class="clip-grid">
+            <div class="clip-empty">
+              <span data-icon="play"></span>
+              <h3>THE FIRST HIGHLIGHT COULD BE YOURS.</h3>
+              <p>
+                Share an MP4 or WebM clip up to 20 MB. Let the squad react.
+              </p>
+              <button class="text-link" data-action="video">
+                Upload a clip <span data-icon="arrow-up-right"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="shell section-block">
+        <div id="crown-card" class="crown-card reveal">
+          <div class="crown-emblem" data-icon="crown"></div>
+          <span class="eyebrow">THE FINAL WORD</span>
+          <h2>A CROWN TO BE EARNED.</h2>
+          <p>The season winner appears when every matchup has a result.</p>
+        </div>
+      </section>
+
+      <section class="shell rules-section">
+        <div>
+          <span class="eyebrow">KEEP THE GAME FAIR</span>
+          <h3>THE GROUND RULES.</h3>
+        </div>
+        <div class="rules-list">
+          <details>
+            <summary>How do rankings work?<span>+</span></summary>
+            <p>
+              A win earns 3 points. Ties in points use score difference, then
+              scores for. If exactly two players are still tied, their
+              head-to-head result decides. Otherwise they share the rank. A
+              final tied rank shares the crown. Players without results are
+              unranked.
+            </p>
+          </details>
+          <details>
+            <summary>Can the same players meet twice?<span>+</span></summary>
+            <p>
+              One official result per pair, whichever way the names are
+              entered. Scores must be whole numbers from 0 to 6, with a clear
+              winner. Capitalization, spaces and punctuation do not create a
+              new identity. Different spellings found in screenshots must be
+              mapped to the existing player.
+            </p>
+          </details>
+          <details>
+            <summary>
+              How are screenshot results checked?<span>+</span>
+            </summary>
+            <p>
+              Text recognition helps read the scoreboard. The uploader must
+              check both players and final scores. The original image and any
+              corrections remain visible. Anyone can flag a concern; open
+              concerns hold the final crown. Screenshots and anonymous uploads
+              cannot prove authenticity by themselves.
+            </p>
+          </details>
+          <details>
+            <summary>Can players join later?<span>+</span></summary>
+            <p>
+              Add real participants before the first result. The roster then
+              locks so the season has a fixed finish line. Match reminders are
+              generated from the current results and can be copied and shared
+              by you.
+            </p>
+          </details>
+          <details>
+            <summary>How do clips and reactions work?<span>+</span></summary>
+            <p>
+              Post your own gameplay as MP4 or WebM, up to 20 MB. Each browser
+              can choose one reaction per clip and change or remove it.
+              Reactions never affect standings. Uploads and match evidence are
+              public.
+            </p>
+          </details>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer shell">
+      <a class="brand" href="#home"
+        ><span class="brand-mark">C<span>·</span>D</span
+        ><span class="brand-copy"
+          >SOLO LEAGUE<small>BUILT FOR THE LOBBY.</small></span
+        ></a
+      >
+      <p>
+        A community fan project. Not affiliated with Activision.<br />Real
+        matches. Shared moments. Fair play.
+      </p>
+      <a class="text-link" href="#home"
+        >Back to top <span data-icon="arrow-up-right"></span
+      ></a>
+    </footer>
+
+    <nav class="phone-tabs" aria-label="League tabs">
+      <a href="#home" data-tab="home" aria-current="page"
+        ><span data-icon="home"></span><span>HOME</span></a
+      >
+      <a href="#league" data-tab="league"
+        ><span data-icon="trophy"></span><span>LEAGUE</span></a
+      >
+      <button
+        class="tab-post"
+        data-action="upload"
+        aria-label="Post a scoreboard"
+      >
+        <span data-icon="plus"></span><span>POST</span>
+      </button>
+      <a href="#matches" data-tab="matches"
+        ><span data-icon="target"></span><span>MATCHES</span></a
+      >
+      <a href="#clips" data-tab="clips"
+        ><span data-icon="film"></span><span>CLIPS</span></a
+      >
+    </nav>
+    <dialog id="settings-sheet" aria-labelledby="settings-title">
+      <div class="modal-header">
+        <span class="sheet-handle" aria-hidden="true"></span>
+        <div>
+          <span class="eyebrow">MAKE IT YOURS</span>
+          <h2 id="settings-title">Your experience.</h2>
+        </div>
+        <button
+          id="settings-close"
+          class="icon-button"
+          aria-label="Close settings"
+        >
+          <span data-icon="close"></span>
+        </button>
+      </div>
+      <div class="settings-body">
+        <section
+          class="soundtrack-panel"
+          aria-labelledby="soundtrack-heading"
+        >
+          <div class="soundtrack-heading">
+            <span data-icon="film"></span>
+            <div>
+              <h3 id="soundtrack-heading">Your soundtrack.</h3>
+              <p id="soundtrack-name">Bring your own audio.</p>
+            </div>
+          </div>
+          <p class="fine-print">
+            Choose a track you’re allowed to use. It stays on this device and
+            never uploads to the league.
+          </p>
+          <label class="button button-outline soundtrack-picker"
+            >Choose audio <span data-icon="plus"></span
+            ><input
+              type="file"
+              id="soundtrack-file"
+              accept="audio/mpeg,audio/mp4,audio/wav,audio/x-wav,audio/ogg,audio/webm,audio/flac"
+              aria-label="Choose soundtrack audio"
+          /></label>
+          <div class="soundtrack-controls" hidden>
+            <button id="soundtrack-play" class="button button-dark">
+              Play music <span data-icon="play"></span></button
+            ><button
+              id="soundtrack-remove"
+              class="icon-button"
+              aria-label="Remove soundtrack"
+            >
+              <span data-icon="close"></span>
+            </button>
+          </div>
+          <label class="soundtrack-volume" hidden
+            ><span>Music volume</span
+            ><input
+              id="soundtrack-volume"
+              type="range"
+              min="0"
+              max="100"
+              value="35"
+              aria-label="Music volume"
+          /></label>
+          <label class="setting-row beat-setting"
+            ><span
+              ><strong>Beat haptics</strong
+              ><small id="beat-support"
+                >Optional short pulses while your music plays.</small
+              ></span
+            ><input
+              type="checkbox"
+              role="switch"
+              id="soundtrack-haptics" /><span
+              class="switch-track"
+              aria-hidden="true"
+            ></span
+          ></label>
+          <p
+            class="soundtrack-status fine-print"
+            id="soundtrack-status"
+            role="status"
+          >
+            MP3, M4A, WAV, OGG or FLAC · up to 20 MB. Tap Play to start.
+          </p>
+        </section>
+        <label class="setting-row"
+          ><span
+            ><strong>Sound</strong
+            ><small>Quiet cues for saved results and errors.</small></span
+          ><input type="checkbox" role="switch" id="setting-sound" /><span
+            class="switch-track"
+            aria-hidden="true"
+          ></span
+        ></label>
+        <label class="setting-row"
+          ><span
+            ><strong>Haptics</strong
+            ><small id="haptic-support"
+              >Short feedback on supported devices.</small
+            ></span
+          ><input type="checkbox" role="switch" id="setting-haptics" /><span
+            class="switch-track"
+            aria-hidden="true"
+          ></span
+        ></label>
+        <label class="setting-row"
+          ><span
+            ><strong>Motion</strong
+            ><small>Gentle transitions and scroll animation.</small></span
+          ><input type="checkbox" role="switch" id="setting-motion" /><span
+            class="switch-track"
+            aria-hidden="true"
+          ></span
+        ></label>
+        <p class="fine-print">
+          Saved on this device. Video sound is controlled in the player.
+        </p>
+      </div>
+    </dialog>
+    <audio id="lobby-audio" preload="metadata" loop></audio>
+    <dialog id="modal" aria-labelledby="modal-title">
+      <div class="modal-header">
+        <span class="sheet-handle" aria-hidden="true"></span>
+        <div>
+          <span class="eyebrow" id="modal-kicker">SOLO LEAGUE</span>
+          <h2 id="modal-title"></h2>
+        </div>
+        <button
+          id="modal-close"
+          class="icon-button"
+          aria-label="Close dialog"
+        >
+          <span data-icon="close"></span>
+        </button>
+      </div>
+      <ol
+        id="post-steps"
+        class="post-steps"
+        aria-label="Posting progress"
+        hidden
+      >
+        <li>1 · Choose</li>
+        <li>2 · Review</li>
+        <li>3 · Confirm</li>
+        <li>4 · Receipt</li>
+      </ol>
+      <p id="post-state" class="post-state" role="status" hidden></p>
+      <div id="modal-content"></div>
+    </dialog>
+    <div class="toast" id="toast" role="status" hidden></div>
+    <noscript
+      ><div class="noscript">
+        This league needs JavaScript to load shared results and uploads.
+      </div></noscript
+    >
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
