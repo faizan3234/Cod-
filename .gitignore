@@ -6,3 +6,5 @@ dist/
 .env.*
 test-results/
 *.log
+COD_81_WEBP_SCROLL_FRAMES/
+splash main page start.jpeg

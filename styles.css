@@ -8,25 +8,51 @@
 
 :root {
   font-family: Manrope, Arial, sans-serif;
-  color: #273027;
-  background: #f4f5ef;
+  color: #f4f4f1;
+  background: #030303;
   font-synthesis: none;
-  --paper: #f4f5ef;
-  --white: #fff;
-  --ink: #273027;
-  --muted: #777e71;
-  --olive: #718055;
-  --line: #dce0d3;
-  --lime: #d8f58a;
+  --paper: #090909;
+  --white: #121212;
+  --ink: #f4f4f1;
+  --muted: #a3a29d;
+  --olive: #d4a017;
+  --line: #222220;
+  --lime: #f3b218;
   --header: 88px;
-  color-scheme: light;
+  color-scheme: dark;
   scroll-behavior: smooth;
+
+  /* COD Mobile Tactical Color Tokens */
+  --cod-black: #030303;
+  --cod-panel: #0b0b0b;
+  --cod-panel-glass: rgba(11, 11, 11, 0.88);
+  --cod-white: #f4f4f1;
+  --cod-muted: #aaa9a3;
+  --cod-amber: #f3b218;
+  --cod-orange: #ff6a00;
+  --cod-fire: #ff3b00;
+  --cod-red: #d42418;
+  --cod-border: rgba(243, 178, 24, 0.35);
+
+  --beat: 0;
 }
 * {
   box-sizing: border-box;
 }
+html,
 body {
   margin: 0;
+  width: 100%;
+  min-height: 100%;
+  background: #030303;
+  color: #f4f4f1;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 button,
 input,

@@ -6,21 +6,51 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <meta name="theme-color" content="#f6f7f2" />
+    <meta name="theme-color" content="#030303" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="Solo League" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="COD Solo League" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta
       name="description"
-      content="Your COD 1v1 league. Post the scoreboard, follow the standings, share your gameplay. Every match counts."
+      content="Call of Duty Mobile Solo League. Post the scoreboard, track the leaderboard, feel every combat encounter."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <title>COD Solo League — Every match counts.</title>
+    <title>COD Solo League — One Lobby. One Crown.</title>
   </head>
   <body>
+    <div id="landscape-warning" class="landscape-warning" aria-hidden="true">
+      <div class="warning-box">
+        <span class="warning-icon">⟳</span>
+        <h2>ROTATE DEVICE</h2>
+        <p>COMBAT EXPERIENCE REQUIRES PORTRAIT ORIENTATION</p>
+      </div>
+    </div>
+
+    <section id="deploy-gateway" class="deploy-gateway" aria-label="Deployment Gate">
+      <div class="deploy-bg">
+        <img src="/media/cod-mobile-hero.jpg" alt="Call of Duty Mobile Operator" class="deploy-hero-img" />
+        <div class="deploy-vignette"></div>
+        <div class="deploy-fire-glow"></div>
+        <div class="deploy-embers-fx"></div>
+      </div>
+      <div class="deploy-content">
+        <div class="deploy-badge">
+          <span class="square-dot"></span> CALL OF DUTY MOBILE
+          <span>// SOLO LEAGUE</span>
+        </div>
+        <h1 class="deploy-title">ONE LOBBY.<br /><span class="accent-title">ONE CROWN.</span></h1>
+        <p class="deploy-subtitle">THE MOMENTS ARE YOURS. THE SCOREBOARD MAKES THEM OFFICIAL.</p>
+        <button id="btn-deploy" class="btn-deploy" type="button" aria-label="Deploy into battlefield">
+          <span class="btn-glitch" aria-hidden="true"></span>
+          <span class="btn-text">TAP TO DEPLOY</span>
+          <span class="btn-subtext">SOUND • HAPTICS • IMMERSIVE MODE</span>
+        </button>
+      </div>
+    </section>
+
     <a class="skip-link" href="#league">Skip to standings</a>
     <header class="site-header">
       <a href="#home" class="brand" aria-label="COD Solo League home"
@@ -138,7 +168,26 @@
         </div>
       </section>
 
-      <section class="shell league-pulse" aria-label="League progress">
+      <!-- 81-Frame WebP Battlefield Canvas Sequence (Omnitrix-style architecture) -->
+      <section id="battle-sequence" class="battle-sequence" aria-label="Battlefield Simulation">
+        <div class="battle-sticky" id="battle-container">
+          <canvas id="battle-canvas"></canvas>
+          <div id="battle-flash" class="battle-flash" aria-hidden="true"></div>
+          <div class="battle-fire-glow" aria-hidden="true"></div>
+          <div class="battle-hud-overlay" aria-hidden="true">
+            <div class="hud-top-bar">
+              <span class="hud-tag"><span class="square-dot"></span> TACTICAL // COMBAT ZONE</span>
+              <span class="hud-coords">34.0522° N, 118.2437° W</span>
+            </div>
+            <div id="battle-scroll-prompt" class="battle-scroll-prompt">
+              <span class="scroll-chevron">↓</span>
+              <strong>SCROLL SLOWLY</strong>
+              <small>CONTROL THE BATTLE</small>
+            </div>
+            <div class="hud-reticle"></div>
+          </div>
+        </div>
+      </section>
         <div class="pulse-stat">
           <span class="stat-value" id="stat-players">—</span
           ><span class="stat-label">PLAYERS</span>
@@ -687,6 +736,16 @@
       </div>
     </dialog>
     <audio id="lobby-audio" preload="metadata" loop></audio>
+    <audio id="battle-music" src="/audio/dhurandhar.mp3" preload="auto" loop></audio>
+
+    <div class="battle-quick-controls" aria-label="Audio and haptic controls">
+      <button id="battle-sound-toggle" class="icon-button battle-btn" aria-label="Toggle battlefield soundtrack" title="Audio">
+        <span data-icon="volume-on"></span>
+      </button>
+      <button id="battle-haptic-toggle" class="icon-button battle-btn" aria-label="Toggle tactical haptics" title="Haptics">
+        <span data-icon="spark"></span>
+      </button>
+    </div>
     <dialog id="modal" aria-labelledby="modal-title">
       <div class="modal-header">
         <span class="sheet-handle" aria-hidden="true"></span>

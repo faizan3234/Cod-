@@ -20,6 +20,8 @@ import {
 } from './lib/league.js';
 import { icon, hydrateIcons } from './lib/icons.js';
 import { setupMotion } from './lib/motion.js';
+import { setupBattleSequence } from './lib/battleSequence.js';
+import { setupBattleAudio } from './lib/battleAudio.js';
 
 const $ = (selector) => document.querySelector(selector);
 const escape = (value) =>
@@ -1058,6 +1060,8 @@ void readDraft().then((value) => {
 if (import.meta.env.PROD && 'serviceWorker' in navigator)
   void navigator.serviceWorker.register('/sw.js').catch(() => {});
 setupMotion();
+setupBattleSequence();
+setupBattleAudio();
 setupLobby();
 setupSoundtrack();
 void refresh();
