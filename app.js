@@ -680,7 +680,7 @@ function playerDetailModal(id) {
             .map((f) => (f === 'W' ? 'Win' : 'Loss'))
             .join(' · ')
         : 'No results yet'
-    }</p></div><h3>Still to play</h3><p>${opponents.length ? opponents.map((p) => escape(p.name)).join(' · ') : 'Every opponent played.'}</p><button class="button button-dark" data-action="reminder" data-player="${escape(id)}">Copy a match reminder ${icon('copy')}</button>${rawPlayer?.pinOwned ? `<button class="text-link pin-reset-link" id="reset-pin-btn">${icon('lock')} Reset this player's PIN</button>` : ''}</div>`,
+    }</p></div><h3>Still to play</h3><p>${opponents.length ? opponents.map((p) => escape(p.name)).join(' · ') : 'Every opponent played.'}</p><button class="button button-dark button-sm pin-reset-btn" id="reset-pin-btn">${icon('lock')} Get / Reset My Private PIN</button>` : `<p class="fine-print">${icon('lock')} This player's PIN is bound to their personal device.</p>`}</div>`,
     'PLAYER RECORD',
   );
   const resetBtn = document.getElementById('reset-pin-btn');
@@ -688,7 +688,7 @@ function playerDetailModal(id) {
     resetBtn.addEventListener('click', async () => {
       if (saving) return;
       resetBtn.disabled = true;
-      resetBtn.textContent = 'Resetting…';
+      resetBtn.textContent = 'Generating PIN…';
       try {
         const response = await api('reveal-pin', { playerId: id });
         if (response.pin) {
@@ -696,7 +696,7 @@ function playerDetailModal(id) {
         }
       } catch (err) {
         resetBtn.disabled = false;
-        resetBtn.innerHTML = `${icon('lock')} Reset this player's PIN`;
+        resetBtn.innerHTML = `${icon('lock')} Get / Reset My Private PIN`;
         toast(err.message, true);
       }
     });
@@ -750,7 +750,7 @@ function matchDetailModal(id) {
   const bothAccepted = Boolean(m.acceptedA && m.acceptedB);
   openModal(
     'YOUR NEXT MATCH.',
-    `<div class="pending-detail"><div class="hub-versus"><div>${avatar(m.playerA)}<strong>${escape(names(m.playerA))}</strong></div><span>vs</span><div>${avatar(m.playerB)}<strong>${escape(names(m.playerB))}</strong></div></div><span class="pill">${m.status === 'queued' ? 'QUEUED' : 'STILL TO PLAY'}</span><p>One official match between these players. Both must enter their PIN to unlock posting.</p>${bothAccepted ? `<button class="button button-dark" data-action="upload" data-pair="${escape(id)}">Post this match ${icon('upload')}</button>` : `<div class="charter-locked-notice">${icon('lock')} <span>Both players must enter their PIN below before results can be posted.</span></div>`}</div><div class="charter-accept-section"><div class="charter-accept-header"><span class="charter-accept-icon">${icon('crown')}</span><h3>MATCH CHARTER</h3><p>No rematch. No replay for connection issues. The final scoreboard is the record.</p></div>${bothAccepted ? `<div class="charter-both-agreed"><span class="charter-agreed-badge">${icon('check')} BOTH PLAYERS AGREED</span><small>Player A: ${new Date(m.acceptedA).toLocaleDateString()} · Player B: ${new Date(m.acceptedB).toLocaleDateString()}</small></div>` : `<div class="charter-slots-accept">${charterSlotHtml(m.playerA, m.acceptedA, 'A')}${charterSlotHtml(m.playerB, m.acceptedB, 'B')}</div><p class="fine-print">Each player enters their private 6-digit PIN to lock in agreement. (Initial roster default PIN is <strong>123456</strong>, or manage via player profile in Standings).</p>`}</div>`,
+    `<div class="pending-detail"><div class="hub-versus"><div>${avatar(m.playerA)}<strong>${escape(names(m.playerA))}</strong></div><span>vs</span><div>${avatar(m.playerB)}<strong>${escape(names(m.playerB))}</strong></div></div><span class="pill">${m.status === 'queued' ? 'QUEUED' : 'STILL TO PLAY'}</span><p>One official match between these players. Both must enter their PIN to unlock posting.</p>${bothAccepted ? `<button class="button button-dark" data-action="upload" data-pair="${escape(id)}">Post this match ${icon('upload')}</button>` : `<div class="charter-locked-notice">${icon('lock')} <span>Both players must enter their PIN below before results can be posted.</span></div>`}</div><div class="charter-accept-section"><div class="charter-accept-header"><span class="charter-accept-icon">${icon('crown')}</span><h3>MATCH CHARTER</h3><p>No rematch. No replay for connection issues. The final scoreboard is the record.</p></div>${bothAccepted ? `<div class="charter-both-agreed"><span class="charter-agreed-badge">${icon('check')} BOTH PLAYERS AGREED</span><small>Player A: ${new Date(m.acceptedA).toLocaleDateString()} · Player B: ${new Date(m.acceptedB).toLocaleDateString()}</small></div>` : `<div class="charter-slots-accept">${charterSlotHtml(m.playerA, m.acceptedA, 'A')}${charterSlotHtml(m.playerB, m.acceptedB, 'B')}</div><p class="fine-print">Each player enters their private 6-digit PIN. To view or generate your unique PIN, tap your name in <strong>Standings</strong>. PINs automatically cycle each match for privacy.</p>`}</div>`,
     'ONE MATCH PER PAIR',
   );
   content.querySelectorAll('.charter-pin-form').forEach((form) => {

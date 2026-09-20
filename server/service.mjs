@@ -535,6 +535,14 @@ export function createService({
           reports: [],
           ...(submissionKey ? { submissionKey, submissionDigest } : {}),
         });
+        for (const pid of [input.playerA, input.playerB]) {
+          const pl = s.players.find((p) => p.id === pid);
+          if (pl) {
+            const nextPin = String(Math.floor(100000 + Math.random() * 900000));
+            pl.pinHash = digest(pid + ':' + nextPin);
+            pl.lastGeneratedPin = nextPin;
+          }
+        }
         return {
           matchId: id,
           savedAt: s.matches.at(-1).completedAt,
@@ -646,7 +654,7 @@ export function createService({
       assert(player, 'Player not found.', 404);
       assert(
         !player.pinOwner || player.pinOwner === owner || mode === 'local',
-        'Only the browser that added this player can reveal their PIN. Use the same device and browser.',
+        'This player is claimed by another device. Only their device can view/reset this PIN.',
         403,
       );
       const newPin = String(Math.floor(100000 + Math.random() * 900000));
@@ -656,13 +664,13 @@ export function createService({
         assert(p, 'Player not found.', 404);
         assert(
           !p.pinOwner || p.pinOwner === owner || mode === 'local',
-          'Only the original browser can reset this PIN.',
+          'Only the player on their claimed device can reset this PIN.',
           403,
         );
         p.pinHash = newHash;
         p.pinOwner = owner;
       });
-      return json({ message: 'PIN has been reset.', pin: newPin });
+      return json({ message: 'Unique PIN generated for this player.', pin: newPin });
     }
     if (action === 'video-start') {
       await rate('video:' + (ip || owner), 5);
