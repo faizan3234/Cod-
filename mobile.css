@@ -2122,6 +2122,24 @@
   color: #777;
   margin-top: 6px;
 }
+.charter-locked-notice {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: rgba(243, 178, 24, 0.08);
+  border: 1px solid rgba(243, 178, 24, 0.2);
+  color: #f3b218;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: left;
+}
+.charter-locked-notice svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
 
 /* PIN Reset Link in Player Detail */
 .pin-reset-link {

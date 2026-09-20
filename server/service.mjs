@@ -468,6 +468,17 @@ export function createService({
         !corrected || note.length >= 8,
         'Explain any OCR corrections or missing fields (at least 8 characters).',
       );
+      const { data: currentData } = await current();
+      const existingMatch = currentData.matches.find(
+        (m) => m.id === pair(currentData, input.playerA, input.playerB),
+      );
+      if (existingMatch && (existingMatch.acceptedA || existingMatch.acceptedB)) {
+        assert(
+          existingMatch.acceptedA && existingMatch.acceptedB,
+          'Both players must enter their PIN and agree to the match charter before posting results.',
+          403,
+        );
+      }
       const saved = await mutate((s) => {
         const id = pair(s, input.playerA, input.playerB),
           old = s.matches.find((m) => m.id === id);
@@ -518,6 +529,8 @@ export function createService({
           correctionNote: corrected ? note : '',
           createdAt: old?.createdAt || now().toISOString(),
           completedAt: now().toISOString(),
+          acceptedA: old?.acceptedA || now().toISOString(),
+          acceptedB: old?.acceptedB || now().toISOString(),
           receiptId: randomUUID(),
           reports: [],
           ...(submissionKey ? { submissionKey, submissionDigest } : {}),
@@ -595,7 +608,20 @@ export function createService({
           403,
         );
         const matchId = text(input.matchId, 80);
-        const m = s.matches.find((mm) => mm.id === matchId);
+        let m = s.matches.find((mm) => mm.id === matchId);
+        if (!m) {
+          const parts = matchId.split('~');
+          if (parts.length === 2 && s.players.some((p) => p.id === parts[0]) && s.players.some((p) => p.id === parts[1])) {
+            m = {
+              id: matchId,
+              playerA: parts[0],
+              playerB: parts[1],
+              status: 'queued',
+              createdAt: now().toISOString(),
+            };
+            s.matches.push(m);
+          }
+        }
         assert(m, 'Match not found.', 404);
         assert(
           m.playerA === playerId || m.playerB === playerId,
