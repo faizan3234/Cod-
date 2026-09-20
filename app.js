@@ -8,6 +8,7 @@ import { feedback, setupFeedback } from './lib/feedback.js';
 import { readDraft, writeDraft, clearDraft } from './lib/draft.js';
 import { showSheet, hideSheet } from './lib/sheets.js';
 import {
+  initialState,
   fixtures,
   standings,
   leagueSummary,
@@ -34,7 +35,7 @@ const escape = (value) =>
   );
 const endpoint = (action, params = {}) =>
   '/.netlify/functions/league?' + new URLSearchParams({ action, ...params });
-let state = null,
+let state = initialState(),
   filter = 'all',
   showAll = false,
   modalVersion = 0,
@@ -1049,6 +1050,7 @@ document.addEventListener(
 );
 hydrateIcons();
 setupFeedback();
+render();
 setupPhone();
 void readDraft().then((value) => {
   if (!draft && value?.file) {

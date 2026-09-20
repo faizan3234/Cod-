@@ -848,12 +848,14 @@
 /* 3. 240-FRAME OMNITRIX BATTLEFIELD CANVAS SEQUENCE */
 .battle-sequence {
   position: relative;
-  height: 800dvh;
-  height: 800svh;
+  height: 550dvh;
+  height: 550svh;
   background: #030303;
   margin: 0;
+  overflow: visible !important;
 }
 .battle-sticky {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   width: 100%;
@@ -864,6 +866,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
 }
 .battle-poster-fallback {
   position: absolute;
