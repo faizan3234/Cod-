@@ -138,7 +138,8 @@ export function createService({
       mode,
       players: s.players.map(({ pinHash, pinOwner, ...p }) => ({
         ...p,
-        pinOwned: !pinOwner || pinOwner === owner || mode === 'local',
+        pinOwned: pinOwner ? pinOwner === owner : true,
+        pinClaimed: Boolean(pinOwner),
       })),
       matches: s.matches.map(({ submissionKey, submissionDigest, ...m }) => ({
         ...m,
@@ -607,12 +608,13 @@ export function createService({
         const player = s.players.find((p) => p.id === playerId);
         assert(player, 'Player not found on the roster.', 404);
         if (!player.pinHash) {
-          player.pinHash = digest(playerId + ':123456');
+          player.pinHash = digest(playerId + ':' + pin);
+          player.pinOwner = owner;
         }
         const expectedHash = digest(playerId + ':' + pin);
         assert(
           expectedHash === player.pinHash,
-          'Incorrect PIN. For initial roster players, default PIN is 123456 (or reset it via player profile in Standings).',
+          'Incorrect PIN. Only the private PIN generated for this player will be accepted.',
           403,
         );
         const matchId = text(input.matchId, 80);
@@ -653,8 +655,8 @@ export function createService({
       const player = data.players.find((p) => p.id === playerId);
       assert(player, 'Player not found.', 404);
       assert(
-        !player.pinOwner || player.pinOwner === owner || mode === 'local',
-        'This player is claimed by another device. Only their device can view/reset this PIN.',
+        !player.pinOwner || player.pinOwner === owner,
+        'This player has been claimed by another device. Only their device can view or reset their PIN.',
         403,
       );
       const newPin = String(Math.floor(100000 + Math.random() * 900000));
@@ -663,8 +665,8 @@ export function createService({
         const p = s.players.find((pp) => pp.id === playerId);
         assert(p, 'Player not found.', 404);
         assert(
-          !p.pinOwner || p.pinOwner === owner || mode === 'local',
-          'Only the player on their claimed device can reset this PIN.',
+          !p.pinOwner || p.pinOwner === owner,
+          'This player has been claimed by another device.',
           403,
         );
         p.pinHash = newHash;

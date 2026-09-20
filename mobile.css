@@ -2061,10 +2061,16 @@
   gap: 8px;
   align-items: center;
 }
+.pin-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 155px;
+}
 .pin-input {
   width: 100%;
-  max-width: 140px;
-  padding: 8px 12px;
+  padding: 8px 32px 8px 12px;
   font: 600 16px/1.2 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
   text-align: center;
   letter-spacing: 4px;
@@ -2083,6 +2089,37 @@
   color: rgba(243, 178, 24, 0.25);
   letter-spacing: 1px;
   font-size: 11px;
+}
+.pin-quick-btn {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border-radius: 6px;
+  background: rgba(243, 178, 24, 0.15);
+  border: 1px solid rgba(243, 178, 24, 0.3);
+  color: #f3b218;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.pin-quick-btn:hover {
+  background: rgba(243, 178, 24, 0.35);
+  border-color: #f3b218;
+}
+.pin-quick-btn svg {
+  width: 12px;
+  height: 12px;
+}
+.pin-reveal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 18px;
 }
 .button-sm {
   font-size: 11px;

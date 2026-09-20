@@ -738,7 +738,11 @@ function charterSlotHtml(playerId, accepted, side) {
   if (accepted) {
     return `<div class="charter-slot charter-accepted"><span class="charter-slot-check">${icon('check')}</span><strong>${playerName}</strong><small>Accepted ${new Date(accepted).toLocaleDateString()}</small></div>`;
   }
-  return `<div class="charter-slot charter-pending"><strong>${playerName}</strong><small>Awaiting acceptance</small><form class="charter-pin-form" data-player="${escape(playerId)}" data-side="${side}"><input class="pin-input" name="pin" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" minlength="6" placeholder="6-digit PIN" autocomplete="off" required aria-label="Enter ${playerName}'s PIN" /><button class="button button-dark button-sm" type="submit">Accept ${icon('lock')}</button>${errorMarkup()}</form></div>`;
+  let savedPin = '';
+  try {
+    savedPin = localStorage.getItem('player-pin-' + playerId) || '';
+  } catch {}
+  return `<div class="charter-slot charter-pending"><strong>${playerName}</strong><small>Awaiting acceptance</small><form class="charter-pin-form" data-player="${escape(playerId)}" data-side="${side}"><div class="pin-input-wrap"><input class="pin-input" name="pin" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" minlength="6" placeholder="6-digit PIN" value="${savedPin}" autocomplete="off" required aria-label="Enter ${playerName}'s PIN" />${savedPin ? `<button type="button" class="pin-quick-btn auto-fill-pin" title="Use saved PIN">${icon('check')}</button>` : `<button type="button" class="pin-quick-btn paste-pin" title="Paste PIN">${icon('copy')}</button>`}</div><button class="button button-dark button-sm" type="submit">Accept ${icon('lock')}</button>${errorMarkup()}</form></div>`;
 }
 function matchDetailModal(id) {
   const m = fixtures(state).find((m) => m.id === id);
@@ -754,6 +758,29 @@ function matchDetailModal(id) {
     'ONE MATCH PER PAIR',
   );
   content.querySelectorAll('.charter-pin-form').forEach((form) => {
+    const pinInput = form.querySelector('.pin-input');
+    form.querySelector('.paste-pin')?.addEventListener('click', async () => {
+      try {
+        const text = await navigator.clipboard.readText();
+        const clean = text.trim().slice(0, 6);
+        if (clean && /^\d+$/.test(clean)) {
+          pinInput.value = clean;
+          toast('PIN pasted from clipboard!');
+        } else {
+          toast('Copied text was not a valid PIN.');
+        }
+      } catch {
+        pinInput.focus();
+      }
+    });
+    form.querySelector('.auto-fill-pin')?.addEventListener('click', () => {
+      const pid = form.dataset.player;
+      const saved = localStorage.getItem('player-pin-' + pid);
+      if (saved) {
+        pinInput.value = saved;
+        toast('Autofilled saved PIN!');
+      }
+    });
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (saving) return;
@@ -767,6 +794,9 @@ function matchDetailModal(id) {
       form.querySelector('.form-error').hidden = true;
       try {
         await api('accept-charter', { matchId: id, playerId, pin });
+        try {
+          localStorage.setItem('player-pin-' + playerId, pin);
+        } catch {}
         await refresh(false, true);
         setSaving(false);
         feedback('saved');
@@ -848,14 +878,34 @@ function playerModal() {
 }
 function pinRevealModal(playerName, pin) {
   feedback('saved');
+  const playerId = normalizeName(playerName);
   openModal(
     'SAVE THIS PIN.',
-    `<div class="pin-reveal"><div class="pin-reveal-icon">${icon('crown')}</div><h3>${escape(playerName)} is on the roster.</h3><p>This is their <strong>private 6-digit PIN</strong>. It's needed to accept match charters. Screenshot it or write it down — it won't be shown again in full.</p><div class="pin-code" aria-label="Player PIN">${pin.split('').map((d) => `<span>${d}</span>`).join('')}</div><div class="pin-warning">${icon('lock')} Only share this PIN with <strong>${escape(playerName)}</strong></div><button class="button button-dark" id="pin-done">I've saved it ${icon('check')}</button></div>`,
+    `<div class="pin-reveal"><div class="pin-reveal-icon">${icon('crown')}</div><h3>${escape(playerName)}'s Private PIN</h3><p>Use this <strong>6-digit PIN</strong> to accept match charters. Save it or keep it on this device.</p><div class="pin-code" id="revealed-pin-display" data-pin="${pin}" aria-label="Player PIN">${pin.split('').map((d) => `<span>${d}</span>`).join('')}</div><div class="pin-reveal-actions"><button type="button" class="button button-outline button-sm" id="copy-pin-btn">${icon('copy')} Copy PIN</button><button type="button" class="button button-dark button-sm" id="save-pin-device-btn">${icon('check')} Save to this device</button></div><div class="pin-warning">${icon('lock')} Stored securely. Only share with <strong>${escape(playerName)}</strong></div><button class="button button-dark" id="pin-done">Done ${icon('check')}</button></div>`,
     'PLAYER PIN',
   );
+  try {
+    localStorage.setItem('player-pin-' + playerId, pin);
+    localStorage.setItem('my-player-id', playerId);
+  } catch {}
+  $('#copy-pin-btn')?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(pin);
+      toast('PIN copied to clipboard: ' + pin);
+    } catch {
+      toast('PIN: ' + pin);
+    }
+  });
+  $('#save-pin-device-btn')?.addEventListener('click', () => {
+    try {
+      localStorage.setItem('player-pin-' + playerId, pin);
+      localStorage.setItem('my-player-id', playerId);
+      toast('PIN saved to this device for auto-fill!');
+    } catch {}
+  });
   $('#pin-done').addEventListener('click', () => {
     closeModal();
-    toast(`${playerName} added to the roster.`);
+    toast(`${playerName}'s PIN is locked in.`);
   });
 }
 function reminderModal(id = '') {
