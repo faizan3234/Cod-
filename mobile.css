@@ -569,14 +569,14 @@
     gap: 8px;
   }
   .rank-card {
-    background: #fff;
-    border: 1px solid #e0e6d8;
+    background: #0d0d0d;
+    border: 1px solid rgba(243, 178, 24, 0.25);
     border-radius: 15px;
     overflow: hidden;
   }
   .rank-card.rank-leading {
-    border-color: #c4d4ae;
-    background: #f5f8ed;
+    border-color: #f3b218;
+    background: linear-gradient(110deg, rgba(30, 24, 10, 0.95), rgba(18, 18, 18, 0.95));
   }
   .rank-card > summary {
     display: flex;
@@ -719,8 +719,8 @@
     margin: 0 0 16px;
   }
   .segmented {
-    background: #e9eddf;
-    border: 0;
+    background: rgba(12, 12, 12, 0.95);
+    border: 1px solid rgba(243, 178, 24, 0.22);
     border-radius: 13px;
     padding: 4px;
     width: 100%;
@@ -734,6 +734,7 @@
     flex: 1;
     justify-content: center;
     border-radius: 10px;
+    color: #888884;
   }
   .segmented button > span {
     font-size: 10px;
@@ -746,8 +747,9 @@
     width: 100%;
   }
   .select-label select {
-    background: #fff;
-    border: 1px solid #dfe6d6;
+    background: rgba(14, 14, 14, 0.95);
+    border: 1px solid rgba(243, 178, 24, 0.3);
+    color: #f4f4f1;
     width: 100%;
     min-height: 47px;
     font-size: 13px;
@@ -761,8 +763,9 @@
   .match-card {
     border-radius: 17px;
     padding: 19px 20px;
-    border-color: #e1e6d9;
-    box-shadow: 0 3px 12px #22301b02;
+    background: linear-gradient(135deg, rgba(16, 16, 16, 0.96), rgba(6, 6, 6, 0.94));
+    border-color: rgba(243, 178, 24, 0.28);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
   }
   .match-card:hover {
     transform: none;
@@ -822,7 +825,8 @@
   }
   .player-card {
     border-radius: 17px;
-    background: #fff;
+    background: #0e0e0e;
+    border: 1px solid rgba(243, 178, 24, 0.25);
     padding: 20px;
   }
   .player-card-head strong {
@@ -1229,7 +1233,9 @@
   .modal-header .icon-button {
     width: 44px;
     height: 44px;
-    background: #fff;
+    background: #181818;
+    color: #f3b218;
+    border: 1px solid rgba(243, 178, 24, 0.25);
   }
   #modal-content {
     padding: 23px 23px 28px;
@@ -1320,7 +1326,9 @@
     border-radius: 11px;
     padding: 13px 12px;
     line-height: 1.5;
-    background: #fff;
+    background: #161616;
+    color: #f4f4f1;
+    border: 1px solid rgba(243, 178, 24, 0.28);
   }
   .field small {
     font-size: 11px;

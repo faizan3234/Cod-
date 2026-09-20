@@ -994,20 +994,22 @@ td:last-child {
   margin: 16px 0;
 }
 .upload-banner {
-  background: #e6edda;
+  background: linear-gradient(135deg, rgba(18, 18, 18, 0.96), rgba(8, 8, 8, 0.94));
   display: flex;
   gap: 24px;
   align-items: center;
   justify-content: space-between;
   padding: 28px 32px;
   border-radius: 7px;
-  border: 1px solid #dbe4cc;
+  border: 1px solid rgba(243, 178, 24, 0.28);
+  color: #f4f4f1;
 }
 .banner-icon {
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  border: 1px solid #b7c69c;
+  border: 1px solid rgba(243, 178, 24, 0.4);
+  background: rgba(243, 178, 24, 0.08);
   border-radius: 50%;
   width: 57px;
   height: 57px;
@@ -1041,8 +1043,8 @@ td:last-child {
 .segmented {
   display: inline-flex;
   gap: 3px;
-  background: #e9ecdf;
-  border: 1px solid #e1e5d6;
+  background: rgba(12, 12, 12, 0.95);
+  border: 1px solid rgba(243, 178, 24, 0.22);
   padding: 4px;
   border-radius: 5px;
 }
@@ -1059,22 +1061,23 @@ td:last-child {
   min-height: 36px;
 }
 .segmented button.active {
-  background: white;
-  color: var(--ink);
-  box-shadow: 0 2px 3px #27302708;
+  background: linear-gradient(135deg, #f3b218, #ff8500);
+  color: #030303;
+  font-weight: 800;
+  box-shadow: 0 0 12px rgba(243, 178, 24, 0.4);
 }
 .segmented button > span {
   font-size: 8px;
   min-width: 16px;
-  background: #edf0e5;
+  background: transparent;
   border-radius: 3px;
   padding: 2px 3px;
   text-align: center;
 }
 .select-label select {
   font-size: 10px;
-  background: #fff;
-  border: 1px solid var(--line);
+  background: rgba(14, 14, 14, 0.95);
+  border: 1px solid rgba(243, 178, 24, 0.3);
   border-radius: 4px;
   padding: 12px 33px 12px 13px;
   min-height: 43px;
@@ -1087,9 +1090,10 @@ td:last-child {
   gap: 16px;
 }
 .match-card {
-  border: 1px solid var(--line);
+  border: 1px solid rgba(243, 178, 24, 0.28);
   border-radius: 6px;
-  background: white;
+  background: linear-gradient(135deg, rgba(16, 16, 16, 0.96), rgba(6, 6, 6, 0.94));
+  color: #f4f4f1;
   padding: 19px 21px;
   min-width: 0;
   transition:
@@ -1097,7 +1101,7 @@ td:last-child {
     transform 0.2s;
 }
 .match-card:hover {
-  border-color: #a4b189;
+  border-color: rgba(243, 178, 24, 0.55);
   transform: translateY(-2px);
 }
 .match-card-top {
@@ -1571,27 +1575,28 @@ td:last-child {
 dialog {
   width: min(780px, calc(100% - 32px));
   padding: 0;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(243, 178, 24, 0.35);
   border-radius: 10px;
   color: var(--ink);
-  background: var(--paper);
+  background: #0c0c0c;
   max-height: calc(100svh - 48px);
-  box-shadow: 0 24px 100px #14201744;
+  box-shadow: 0 24px 100px rgba(0, 0, 0, 0.9);
 }
 dialog::backdrop {
-  background: #12201799;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
 }
 .modal-header {
   position: sticky;
   top: 0;
   z-index: 5;
-  background: #f4f5eff5;
+  background: #111111;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
   padding: 24px 28px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(243, 178, 24, 0.2);
 }
 .modal-header h2 {
   font-size: 32px;
