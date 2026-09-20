@@ -736,7 +736,10 @@
       </div>
     </dialog>
     <audio id="lobby-audio" preload="metadata" loop></audio>
-    <audio id="battle-music" src="/audio/dhurandhar.mp3" preload="auto" loop></audio>
+    <audio id="battle-music" preload="auto" loop playsinline webkit-playsinline>
+      <source src="/audio/dhurandhar.wav" type="audio/wav" />
+      <source src="/audio/dhurandhar.mp3" type="audio/mpeg" />
+    </audio>
 
     <div class="battle-quick-controls" aria-label="Audio and haptic controls">
       <button id="battle-sound-toggle" class="icon-button battle-btn" aria-label="Toggle battlefield soundtrack" title="Audio">
