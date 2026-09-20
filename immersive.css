@@ -845,6 +845,43 @@
   opacity: 0.85;
 }
 
+.deploy-direct-actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  max-width: 330px;
+  margin-top: 4px;
+}
+.btn-direct-jump {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: rgba(18, 18, 18, 0.85);
+  border: 1px solid rgba(243, 178, 24, 0.35);
+  border-radius: 4px;
+  color: #f4f4f1;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.btn-direct-jump:hover,
+.btn-direct-jump:active {
+  background: rgba(243, 178, 24, 0.18);
+  border-color: #f3b218;
+  color: #f3b218;
+}
+.btn-direct-jump svg {
+  width: 14px;
+  height: 14px;
+}
+
 /* 3. 240-FRAME OMNITRIX BATTLEFIELD CANVAS SEQUENCE */
 .battle-sequence {
   position: relative;
@@ -984,6 +1021,40 @@
 @keyframes chevron-pulse {
   0%, 100% { transform: translateY(0); opacity: 0.7; }
   50% { transform: translateY(6px); opacity: 1; }
+}
+
+.battle-skip-btn {
+  pointer-events: auto;
+  align-self: center;
+  margin-top: -24px;
+  margin-bottom: calc(env(safe-area-inset-bottom, 20px) + 20px);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: rgba(12, 12, 12, 0.82);
+  border: 1px solid rgba(243, 178, 24, 0.4);
+  border-radius: 4px;
+  color: #f4f4f1;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.battle-skip-btn:hover,
+.battle-skip-btn:active {
+  background: rgba(243, 178, 24, 0.2);
+  border-color: #f3b218;
+  color: #f3b218;
+}
+.battle-skip-btn svg {
+  width: 14px;
+  height: 14px;
 }
 
 /* 4. FLOATING QUICK CONTROLS */
